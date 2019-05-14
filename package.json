@@ -1,0 +1,9 @@
+{
+  "name": "instagram-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Arnelle Balane <arnellebalane@gmail.com>",
+  "license": "MIT"
+}
