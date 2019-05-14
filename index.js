@@ -5,7 +5,8 @@ const ref = firebase.database().ref('graphql-workshop');
 
 const typeDefs = gql`
     type Query {
-        posts: [Post]
+        posts: [Post],
+        users: [User]
     }
 
     type Post {
@@ -16,13 +17,24 @@ const typeDefs = gql`
         media_type: String
         media_url: String
         permalink: String
+        author: User!
+    }
+
+    type User {
+        id: String!
+        name: String
+        handle: String!
     }
 `;
 
 const resolvers = {
     Query: {
         posts: async () => {
-            const snapshot = await ref.once('value');
+            const snapshot = await ref.child('posts').once('value');
+            return Object.values(snapshot.val());
+        },
+        users: async () => {
+            const snapshot = await ref.child('users').once('value');
             return Object.values(snapshot.val());
         }
     }
