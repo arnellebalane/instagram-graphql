@@ -5,5 +5,9 @@
   "main": "index.js",
   "keywords": [],
   "author": "Arnelle Balane <arnellebalane@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.5.0",
+    "graphql": "^14.3.0"
+  }
 }
