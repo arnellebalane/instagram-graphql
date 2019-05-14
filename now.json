@@ -7,6 +7,7 @@
       "maxLambdaSize": "15mb"
     }
   }],
+  "alias": "instagram-graphql.arnelle.me",
   "env": {
     "FIREBASE_CREDENTIAL": "@ihs-firebase-credential"
   }
