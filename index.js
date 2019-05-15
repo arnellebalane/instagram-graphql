@@ -57,18 +57,29 @@ const typeDefs = gql`
 
         "The handle or username of the Instagram user."
         handle: String!
+
+        "A list of posts authored by the Instagram user."
+        posts: [Post]
     }
 `;
 
 const resolvers = {
     Query: {
-        posts: async () => {
+        async posts() {
             const snapshot = await ref.child('posts').once('value');
             return Object.values(snapshot.val());
         },
-        users: async () => {
+        async users() {
             const snapshot = await ref.child('users').once('value');
             return Object.values(snapshot.val());
+        }
+    },
+
+    User: {
+        async posts(author) {
+            const snapshot = await ref.child('posts').once('value');
+            return Object.values(snapshot.val())
+                .filter(post => post.author.id === author.id);
         }
     }
 };
