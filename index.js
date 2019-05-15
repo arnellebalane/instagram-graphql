@@ -5,11 +5,17 @@ const ref = firebase.database().ref('graphql-workshop');
 
 const typeDefs = gql`
     type Query {
-        "A list of all Instagram posts that uses the hashtag that we're interested in."
-        posts: [Post],
+        "Get a list of all Instagram posts that uses the hashtag that we're interested in."
+        posts: [Post]
 
-        "A list of all users that authored an Instagram post using the hashtag that we're interested in."
+        "Get a specific Instagram post by its ID."
+        post(id: ID!): Post
+
+        "Get a list of all users that authored an Instagram post using the hashtag that we're interested in."
         users: [User]
+
+        "Get a specific Instagram user by its ID."
+        user(id: ID!): User
     }
 
     enum PostMediaType {
@@ -69,9 +75,17 @@ const resolvers = {
             const snapshot = await ref.child('posts').once('value');
             return Object.values(snapshot.val());
         },
+        async post(parent, args) {
+            const snapshot = await ref.child(`posts/${args.id}`).once('value');
+            return snapshot.val();
+        },
         async users() {
             const snapshot = await ref.child('users').once('value');
             return Object.values(snapshot.val());
+        },
+        async user(parent, args) {
+            const snapshot = await ref.child(`users/${args.id}`).once('value');
+            return snapshot.val();
         }
     },
 
