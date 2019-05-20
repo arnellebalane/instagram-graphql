@@ -34,9 +34,6 @@ const typeDefs = gql`
             "The number of likes for the Instagram post."
             like_count: Int = 0,
 
-            "The type of media contained in the Instagram post."
-            media_type: PostMediaType,
-
             "The URL to the media contained in the Instagram post."
             media_url: String,
 
@@ -46,12 +43,6 @@ const typeDefs = gql`
             "The unique identifier of the User who authored this Instagram post."
             author_id: ID!
         ): Post
-    }
-
-    enum PostMediaType {
-        CAROUSEL_ALBUM
-        IMAGE
-        VIDEO
     }
 
     "This type represents an Instagram post that uses the hashtag that we're interested in."
@@ -68,9 +59,6 @@ const typeDefs = gql`
 
         "The number of likes for the Instagram post."
         like_count: Int
-
-        "The type of media contained in the Instagram post."
-        media_type: PostMediaType
 
         "The URL to the media contained in the Instagram post."
         media_url: String
