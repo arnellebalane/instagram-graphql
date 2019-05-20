@@ -1,4 +1,8 @@
-const { ApolloServer, gql } = require('apollo-server');
+const {
+    ApolloServer,
+    gql,
+    UserInputError
+} = require('apollo-server');
 const firebase = require('./firebase');
 
 const ref = firebase.database().ref('graphql-workshop');
@@ -16,6 +20,32 @@ const typeDefs = gql`
 
         "Get a specific Instagram user by its ID."
         user(id: ID!): User
+    }
+
+    type Mutation {
+        "Add a new instagram post."
+        addPost(
+            "The caption of the Instagram post."
+            caption: String!,
+
+            "The number of comments for the Instagram post."
+            comments_count: Int = 0,
+
+            "The number of likes for the Instagram post."
+            like_count: Int = 0,
+
+            "The type of media contained in the Instagram post."
+            media_type: PostMediaType,
+
+            "The URL to the media contained in the Instagram post."
+            media_url: String,
+
+            "The permanent URL to this Instagram post."
+            permalink: String!,
+
+            "The unique identifier of the User who authored this Instagram post."
+            author_id: ID!
+        ): Post
     }
 
     enum PostMediaType {
@@ -86,6 +116,23 @@ const resolvers = {
         async user(parent, args) {
             const snapshot = await ref.child(`users/${args.id}`).once('value');
             return snapshot.val();
+        }
+    },
+
+    Mutation: {
+        async addPost(parent, args) {
+            const author = (await ref.child(`users/${args.author_id}`).once('value')).val();
+            if (!author) {
+                throw new UserInputError('Argument "author_id" needs to be a valid ID.');
+            }
+
+            delete args.author_id;
+            args.id = String(Math.random()).slice(2);
+            args.author = author;
+
+            await ref.child(`posts/${args.id}`).set(args);
+
+            return args;
         }
     },
 
