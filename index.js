@@ -1,11 +1,13 @@
 const {
     ApolloServer,
     gql,
-    UserInputError
+    UserInputError,
+    PubSub
 } = require('apollo-server');
 const firebase = require('./firebase');
 
 const ref = firebase.database().ref('graphql-workshop');
+const pubsub = new PubSub();
 
 const typeDefs = gql`
     type Query {
@@ -23,7 +25,7 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        "Add a new instagram post."
+        "Add a new Instagram post."
         addPost(
             "The caption of the Instagram post."
             caption: String!,
@@ -43,6 +45,11 @@ const typeDefs = gql`
             "The unique identifier of the User who authored this Instagram post."
             author_id: ID!
         ): Post
+    }
+
+    type Subscription {
+        "Get the latest Instagram post."
+        latestPost: Post
     }
 
     "This type represents an Instagram post that uses the hashtag that we're interested in."
@@ -119,8 +126,15 @@ const resolvers = {
             args.author = author;
 
             await ref.child(`posts/${args.id}`).set(args);
+            pubsub.publish('POST_ADDED', {latestPost: args});
 
             return args;
+        }
+    },
+
+    Subscription: {
+        latestPost: {
+            subscribe: () => pubsub.asyncIterator(['POST_ADDED'])
         }
     },
 
