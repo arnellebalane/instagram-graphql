@@ -1,12 +1,5 @@
 {
-  "version": 2,
-  "builds": [{
-    "src": "index.js",
-    "use": "@now/node-server",
-    "config": {
-      "maxLambdaSize": "15mb"
-    }
-  }],
+  "version": 1,
   "alias": "instagram-graphql.arnelle.me",
   "env": {
     "FIREBASE_CREDENTIAL": "@ihs-firebase-credential"
