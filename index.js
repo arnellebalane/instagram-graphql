@@ -98,7 +98,7 @@ const resolvers = {
     Query: {
         async posts() {
             const snapshot = await ref.child('posts').once('value');
-            return Object.values(snapshot.val());
+            return Object.values(snapshot.val() || {});
         },
         async post(parent, args) {
             const snapshot = await ref.child(`posts/${args.id}`).once('value');
@@ -106,7 +106,7 @@ const resolvers = {
         },
         async users() {
             const snapshot = await ref.child('users').once('value');
-            return Object.values(snapshot.val());
+            return Object.values(snapshot.val() || {});
         },
         async user(parent, args) {
             const snapshot = await ref.child(`users/${args.id}`).once('value');
