@@ -147,11 +147,24 @@ const resolvers = {
     }
 };
 
+class Logger {
+    requestDidStart({queryString}) {
+        console.log(queryString);
+    }
+
+    willSendResponse({graphqlResponse}) {
+        console.log(graphqlResponse);
+    }
+}
+
 const server = new ApolloServer({
     typeDefs,
     resolvers,
     introspection: true,
-    playground: true
+    playground: true,
+    extensions: [
+        () => new Logger()
+    ]
 });
 
 server.listen().then(({url}) => {
