@@ -148,8 +148,8 @@ const resolvers = {
 };
 
 class Logger {
-    requestDidStart({queryString}) {
-        console.log(queryString);
+    requestDidStart({operationName}) {
+        console.log(operationName);
     }
 
     willSendResponse({graphqlResponse}) {
