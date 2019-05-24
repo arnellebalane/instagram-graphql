@@ -2,6 +2,7 @@
   "version": 1,
   "alias": "instagram-graphql.arnelle.me",
   "env": {
-    "FIREBASE_CREDENTIAL": "@ihs-firebase-credential"
+    "FIREBASE_CREDENTIAL": "@ihs-firebase-credential",
+    "ENGINE_API_KEY": "@ihs-engine-api-key"
   }
 }
