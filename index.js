@@ -86,8 +86,8 @@ const typeDefs = gql`
         "The display name of the Instagram user."
         name: String
 
-        "The handle or username of the Instagram user."
-        handle: String!
+        "The username of the Instagram user."
+        username: String!
 
         "A list of posts authored by the Instagram user."
         posts: [Post]
