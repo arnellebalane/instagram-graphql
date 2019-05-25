@@ -39,9 +39,6 @@ const typeDefs = gql`
             "The URL to the media contained in the Instagram post."
             media_url: String,
 
-            "The permanent URL to this Instagram post."
-            permalink: String!,
-
             "The unique identifier of the User who authored this Instagram post."
             author_id: ID!
         ): Post
@@ -69,9 +66,6 @@ const typeDefs = gql`
 
         "The URL to the media contained in the Instagram post."
         media_url: String
-
-        "The permanent URL to this Instagram post."
-        permalink: String
 
         "The user that authored this Instagram post."
         author: User!
